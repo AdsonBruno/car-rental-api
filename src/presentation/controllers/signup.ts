@@ -10,5 +10,12 @@ export class SignUpController {
         return badRequest(new MissingParamsError(field));
       }
     }
+
+    const { image } = httpRequest.body;
+
+    return {
+      statusCode: 200,
+      body: 'User created sucessfully',
+    };
   }
 }
