@@ -78,4 +78,23 @@ describe('SignUp Controller', () => {
     expect(httpResponse.statusCode).toBe(201);
     expect(httpResponse.body).toEqual({ message: 'User created sucessfully' });
   });
+
+  test('Should return 201 if an image is provide', () => {
+    const sut = new SignUpController();
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password',
+        image: 'any_image.png',
+      },
+    };
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(201);
+    expect(httpResponse.body).toEqual({
+      message: 'User created sucessfully',
+      image: 'any_image.png',
+    });
+  });
 });
