@@ -75,7 +75,7 @@ describe('SignUp Controller', () => {
       },
     };
     const httpResponse = sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(200);
-    expect(httpResponse.body).toEqual('User created sucessfully');
+    expect(httpResponse.statusCode).toBe(201);
+    expect(httpResponse.body).toEqual({ message: 'User created sucessfully' });
   });
 });
