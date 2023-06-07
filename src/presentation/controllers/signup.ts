@@ -13,6 +13,12 @@ export class SignUpController {
 
     const { image } = httpRequest.body;
 
+    if (image) {
+      return {
+        statusCode: 201,
+        body: { message: 'User created sucessfully', image: image },
+      };
+    }
     return {
       statusCode: 201,
       body: { message: 'User created sucessfully' },
