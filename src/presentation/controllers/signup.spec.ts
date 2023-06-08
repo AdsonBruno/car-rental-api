@@ -1,9 +1,13 @@
 import { SignUpController } from './signup';
 import { MissingParamsError } from '../errors/missing-params-error';
 
+const makeSut = (): SignUpController => {
+  return new SignUpController();
+};
+
 describe('SignUp Controller', () => {
   test('Should return 400 if no name', () => {
-    const sut = new SignUpController();
+    const sut = makeSut();
     const httpRequest = {
       body: {
         email: 'any_email@mail.com',
@@ -18,7 +22,7 @@ describe('SignUp Controller', () => {
   });
 
   test('Should return 400 if no email is provide', () => {
-    const sut = new SignUpController();
+    const sut = makeSut();
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -33,7 +37,7 @@ describe('SignUp Controller', () => {
   });
 
   test('Should return 400 if no password is provide', () => {
-    const sut = new SignUpController();
+    const sut = makeSut();
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -48,7 +52,7 @@ describe('SignUp Controller', () => {
   });
 
   test('Should return 400 if no password confirmation is provide', () => {
-    const sut = new SignUpController();
+    const sut = makeSut();
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -65,7 +69,7 @@ describe('SignUp Controller', () => {
   });
 
   test('Should not return an error if no image is provide', () => {
-    const sut = new SignUpController();
+    const sut = makeSut();
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -82,7 +86,7 @@ describe('SignUp Controller', () => {
   });
 
   test('Should return 201 if an image is provide', () => {
-    const sut = new SignUpController();
+    const sut = makeSut();
     const httpRequest = {
       body: {
         name: 'any_name',
