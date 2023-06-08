@@ -1,5 +1,6 @@
 import { SignUpController } from './signup';
 import { MissingParamsError } from '../errors/missing-params-error';
+import { created } from '../helpers/http-helper';
 
 describe('SignUp Controller', () => {
   test('Should return 400 if no name', () => {
@@ -76,7 +77,9 @@ describe('SignUp Controller', () => {
     };
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(201);
-    expect(httpResponse.body).toEqual({ message: 'User created sucessfully' });
+    expect(httpResponse.body).toEqual({
+      message: 'User created sucessfully',
+    });
   });
 
   test('Should return 201 if an image is provide', () => {
@@ -87,14 +90,14 @@ describe('SignUp Controller', () => {
         email: 'any_email@mail.com',
         password: 'any_password',
         passwordConfirmation: 'any_password',
-        image: 'any_image.png',
+        profileImage: 'any_image.png',
       },
     };
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(201);
     expect(httpResponse.body).toEqual({
       message: 'User created sucessfully',
-      image: 'any_image.png',
+      profileImage: 'any_image.png',
     });
   });
 });
