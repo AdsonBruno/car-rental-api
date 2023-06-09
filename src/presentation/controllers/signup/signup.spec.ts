@@ -29,7 +29,7 @@ const makeAddAccount = (): AddAccount => {
         name: 'valid_name',
         email: 'valid_email@mail.com',
         password: 'valid_password',
-        profileImage: 'valid_png',
+        profileImage: 'valid_image.png',
       };
       return fakeAccount;
     }
@@ -150,6 +150,13 @@ describe('SignUp Controller', () => {
     expect(httpResponse.statusCode).toBe(201);
     expect(httpResponse.body).toEqual({
       message: 'User created sucessfully',
+      account: {
+        email: 'valid_email@mail.com',
+        id: 'valid_id',
+        name: 'valid_name',
+        password: 'valid_password',
+        profileImage: 'valid_image.png',
+      },
     });
   });
 
@@ -169,6 +176,10 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual({
       message: 'User created sucessfully',
       profileImage: 'any_image.png',
+      name: 'any_name',
+      email: 'any_email@mail.com',
+      password: 'any_password',
+      passwordConfirmation: 'any_password',
     });
   });
 
@@ -234,7 +245,7 @@ describe('SignUp Controller', () => {
         email: 'any_email@mail.com',
         password: 'any_password',
         passwordConfirmation: 'any_password',
-        profileImage: 'any_image.png',
+        profileImage: 'valid_image.png',
       },
     };
     sut.handle(httpRequest);
@@ -262,5 +273,29 @@ describe('SignUp Controller', () => {
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
     expect(httpResponse.body).toEqual(new ServerError());
+  });
+
+  test('Should return 200 if valid data is provided', () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'invalid_email@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password',
+        profileImage: 'valid_image.png',
+      },
+    };
+    const httResponse = sut.handle(httpRequest);
+    expect(httResponse.statusCode).toBe(200);
+    expect(httResponse.body).toEqual({
+      account: {
+        id: 'valid_id',
+        name: 'valid_name',
+        email: 'valid_email@mail.com',
+        password: 'valid_password',
+        profileImage: 'valid_image.png',
+      },
+    });
   });
 });
