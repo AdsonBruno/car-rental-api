@@ -1,23 +1,23 @@
+import { AccountModel } from '../controllers/signup/signup-protocols';
 import { ServerError } from '../errors/server-error';
 import { HttpResponse } from '../protocols/http';
 
 export const created = (
-  message: string,
+  account: AccountModel,
   profileImage?: string
 ): HttpResponse => {
-  const responseBody = { profileImage };
+  const responseBody = { ...account };
 
   if (profileImage) {
-    responseBody.profileImage = profileImage;
     return {
-      statusCode: 201,
-      body: { message, profileImage },
+      statusCode: 200,
+      body: { account: responseBody },
     };
   }
 
   return {
-    statusCode: 201,
-    body: { message },
+    statusCode: 200,
+    body: { account },
   };
 };
 
