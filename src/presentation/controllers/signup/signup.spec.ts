@@ -136,31 +136,7 @@ describe('SignUp Controller', () => {
     );
   });
 
-  test('Should not return an error if no image is provide', () => {
-    const { sut } = makeSut();
-    const httpRequest = {
-      body: {
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password',
-        passwordConfirmation: 'any_password',
-      },
-    };
-    const httpResponse = sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(201);
-    expect(httpResponse.body).toEqual({
-      message: 'User created sucessfully',
-      account: {
-        email: 'valid_email@mail.com',
-        id: 'valid_id',
-        name: 'valid_name',
-        password: 'valid_password',
-        profileImage: 'valid_image.png',
-      },
-    });
-  });
-
-  test('Should return 201 if an image is provide', () => {
+  test('Should return 200 if an image is provide', () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
@@ -172,14 +148,13 @@ describe('SignUp Controller', () => {
       },
     };
     const httpResponse = sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(201);
+    expect(httpResponse.statusCode).toBe(200);
     expect(httpResponse.body).toEqual({
-      message: 'User created sucessfully',
-      profileImage: 'any_image.png',
-      name: 'any_name',
-      email: 'any_email@mail.com',
-      password: 'any_password',
-      passwordConfirmation: 'any_password',
+      id: 'valid_id',
+      name: 'valid_name',
+      email: 'valid_email@mail.com',
+      password: 'valid_password',
+      profileImage: 'valid_image.png',
     });
   });
 

@@ -6,7 +6,7 @@ import {
   EmailValidator,
   AddAccount,
 } from '../signup/signup-protocols';
-import { badRequest, created, serverError } from '../../helpers/http-helper';
+import { badRequest, serverError } from '../../helpers/http-helper';
 
 export class SignUpController implements Controller {
   private readonly emailValidator: EmailValidator;
@@ -24,6 +24,7 @@ export class SignUpController implements Controller {
         'email',
         'password',
         'passwordConfirmation',
+        'profileImage',
       ];
       for (const field of requiredField) {
         if (!httpRequest.body[field]) {
@@ -50,13 +51,8 @@ export class SignUpController implements Controller {
 
       return {
         statusCode: 200,
-        body: { account },
+        body: account,
       };
-      // if (profileImage) {
-      //   return created(account, profileImage);
-      // } else {
-      //   return created(account);
-      // }
     } catch (error) {
       return serverError();
     }
