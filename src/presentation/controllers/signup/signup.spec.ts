@@ -220,7 +220,7 @@ describe('SignUp Controller', () => {
         email: 'any_email@mail.com',
         password: 'any_password',
         passwordConfirmation: 'any_password',
-        profileImage: 'valid_image.png',
+        profileImage: 'any_image.png',
       },
     };
     sut.handle(httpRequest);
@@ -228,6 +228,7 @@ describe('SignUp Controller', () => {
       name: 'any_name',
       email: 'any_email@mail.com',
       password: 'any_password',
+      profileImage: 'any_image.png',
     });
   });
 
@@ -254,23 +255,21 @@ describe('SignUp Controller', () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
-        name: 'any_name',
-        email: 'invalid_email@mail.com',
-        password: 'any_password',
-        passwordConfirmation: 'any_password',
+        name: 'valid_name',
+        email: 'valid_email@mail.com',
+        password: 'valid_password',
+        passwordConfirmation: 'valid_password',
         profileImage: 'valid_image.png',
       },
     };
     const httResponse = sut.handle(httpRequest);
     expect(httResponse.statusCode).toBe(200);
     expect(httResponse.body).toEqual({
-      account: {
-        id: 'valid_id',
-        name: 'valid_name',
-        email: 'valid_email@mail.com',
-        password: 'valid_password',
-        profileImage: 'valid_image.png',
-      },
+      id: 'valid_id',
+      name: 'valid_name',
+      email: 'valid_email@mail.com',
+      password: 'valid_password',
+      profileImage: 'valid_image.png',
     });
   });
 });
