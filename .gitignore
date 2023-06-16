@@ -2,3 +2,5 @@ node_modules
 README.md
 dist
 coverage
+.env
+migrations
