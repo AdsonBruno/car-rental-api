@@ -14,8 +14,11 @@ describe('Account Postgres Repository', () => {
     return new AccountPrismaRepository();
   };
 
+  beforeEach(async () => {
+    await PrismaHelper.client.account.deleteMany();
+  });
+
   test('Should return an account on success', async () => {
-    // const sut = new AccountPrismaRepository();
     const sut = makeSut();
     const account = await sut.add({
       name: 'any_name',
