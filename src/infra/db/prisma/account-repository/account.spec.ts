@@ -10,8 +10,13 @@ describe('Account Postgres Repository', () => {
     await PrismaHelper.disconnect();
   });
 
+  const makeSut = (): AccountPrismaRepository => {
+    return new AccountPrismaRepository();
+  };
+
   test('Should return an account on success', async () => {
-    const sut = new AccountPrismaRepository();
+    // const sut = new AccountPrismaRepository();
+    const sut = makeSut();
     const account = await sut.add({
       name: 'any_name',
       email: 'any_email@mail.com',
