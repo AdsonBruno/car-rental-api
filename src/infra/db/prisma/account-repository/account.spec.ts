@@ -15,7 +15,7 @@ describe('Account Postgres Repository', () => {
   };
 
   beforeEach(async () => {
-    await PrismaHelper.client.account.deleteMany();
+    await PrismaHelper.getClient().account.deleteMany();
   });
 
   test('Should return an account on success', async () => {
