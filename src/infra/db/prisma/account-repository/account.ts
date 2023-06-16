@@ -1,19 +1,14 @@
-import { PrismaClient } from '@prisma/client';
 import { AddAccountRepository } from '../../../../data/protocols/add-account-repository';
 import { AddAccountModel } from '../../../../domain/usecases/add-account';
 import { AccountModel } from '../../../../domain/models/account';
+import { PrismaHelper } from '../helpers/prisma-helper';
+import { AccountMapper } from './account-mapper';
 
 export class AccountPrismaRepository implements AddAccountRepository {
-  private prisma: PrismaClient;
-
-  constructor() {
-    this.prisma = new PrismaClient();
-  }
-
   async add(accountData: AddAccountModel): Promise<AccountModel> {
-    await this.prisma.$connect();
+    await PrismaHelper.connect();
 
-    const createdAccount = await this.prisma.account.create({
+    const createdAccount = await PrismaHelper.getClient().account.create({
       data: {
         name: accountData.name,
         email: accountData.email,
@@ -22,12 +17,6 @@ export class AccountPrismaRepository implements AddAccountRepository {
       },
     });
 
-    return {
-      id: createdAccount.id.toString(),
-      name: createdAccount.name,
-      email: createdAccount.email,
-      password: createdAccount.password,
-      profileImage: createdAccount.profile_image,
-    };
+    return AccountMapper.toDomain(createdAccount);
   }
 }
