@@ -1,5 +1,5 @@
 import { AccountPrismaRepository } from './account';
-import { PrismaHelper } from './helpers/prisma-helper';
+import { PrismaHelper } from '../helpers/prisma-helper';
 
 describe('Account Postgres Repository', () => {
   beforeAll(async () => {
