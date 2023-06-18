@@ -2,8 +2,10 @@ import { AccountPrismaRepository } from './account';
 import { PrismaHelper } from '../helpers/prisma-helper';
 
 describe('Account Postgres Repository', () => {
+  const testDbUrl =
+    'postgresql://postgres:postgres@localhost:5432/rental_car_api_test?schema=public';
   beforeAll(async () => {
-    await PrismaHelper.connect();
+    await PrismaHelper.connect(testDbUrl);
   });
 
   afterAll(async () => {
