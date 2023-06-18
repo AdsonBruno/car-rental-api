@@ -1,10 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
-
 export const PrismaHelper = {
-  async connect(): Promise<void> {
-    this.client = new PrismaClient();
+  client: null as PrismaClient,
+
+  async connect(url: string): Promise<void> {
+    this.client = new PrismaClient({
+      datasources: {
+        db: { url: url || process.env.DATABASE_URL },
+      },
+    });
     await this.client.$connect();
   },
 
@@ -12,7 +16,7 @@ export const PrismaHelper = {
     await this.client.$disconnect();
   },
 
-  getClient: (): PrismaClient => {
-    return prisma;
+  getClient(): PrismaClient {
+    return this.client;
   },
 };

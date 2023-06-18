@@ -6,7 +6,9 @@ import { AccountMapper } from './account-mapper';
 
 export class AccountPrismaRepository implements AddAccountRepository {
   async add(accountData: AddAccountModel): Promise<AccountModel> {
-    await PrismaHelper.connect();
+    const testDbUrl =
+      'postgresql://postgres:postgres@localhost:5432/rental_car_api_test?schema=public';
+    await PrismaHelper.connect(testDbUrl);
 
     const createdAccount = await PrismaHelper.getClient().account.create({
       data: {
