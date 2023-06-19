@@ -1,3 +1,11 @@
-import app from './config/app';
+import { PrismaHelper } from '../infra/db/prisma/helpers/prisma-helper';
+import env from './config/env';
 
-app.listen(5050, () => console.log(`Server running at http://localhost:5050`));
+PrismaHelper.connect(env.postgresUrl)
+  .then(async () => {
+    const app = (await import('./config/app')).default;
+    app.listen(env.port, () =>
+      console.log(`Server running at http://localhost:${env.port}`)
+    );
+  })
+  .catch(console.error);
