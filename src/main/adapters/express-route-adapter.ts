@@ -10,3 +10,14 @@ export const adaptRoute = (controller: Controller) => {
     res.status(httpResponse.statusCode).json(httpResponse.body);
   };
 };
+
+export const adaptPdfRoute = (controller: Controller) => {
+  return async (req: Request, res: Response) => {
+    const httpRequest: HttpRequest = {
+      body: req.body,
+    };
+    const httpResponse = await controller.handle(httpRequest);
+    res.set('Content-Type', 'application/pdf');
+    res.status(httpResponse.statusCode).send(httpResponse.body);
+  };
+};
